@@ -8,3 +8,4 @@ using tkinter and I think its going well so far.
 Future updates:
 Adding support for all support google translate languages
 Cleaning up the GUI and adding clear input text button
+Optimize language selection i.e. "Serbian" to "sr" not using if / elif
