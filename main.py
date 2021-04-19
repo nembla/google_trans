@@ -1,44 +1,72 @@
-#Language translator from English to any target using google translate requests
-#Currently supports: Spanish (es), Afrikaans (af), and Norwegian (no), Serbian (sr)
-#Support can be expanded in future project for practice. 
+#application that translates detected language to a variety of output languages
+#python gui with tkinter
+#dependant on google translate alpha version
+from tkinter import *
 from googletrans import Translator
 
 
+#initialize translator and set geometry for window
 translator = Translator()
-run = True
+root = Tk()
+root.geometry("500x400")
+root.title("Language Translator")
 
-#Language Selection
-while run == True:
-    print("\n" + "Welcome to my English Language Translator. Select from the following menu:")
-    print("1.Spanish\n2.Afrikaans\n3.Norwegian\n4.Serbian Cyrillic\n5.Serbian Latinica")
-    menu = int(input("Enter target langauge: "))
+#google translation
+def gtrans():
+    #gets the content to be translated
+    get_text = input_entry.get()
+    in_lang = translator.detect(get_text)    
 
-    if menu == 1:
-        print("Spanish selected.")
-        target_language = 'es'
+    #gets the target language and swaps string to google translate keyphrase for lang selection  
+    target_language = variable.get()      
+    if target_language == "Spanish":            #find a more efficient way to do this
+        dest = 'es'
+    elif target_language == "Afrikaans":
+        dest = 'af'
+    elif target_language == "Norwegian":
+        dest = 'no'
+    elif target_language == "Serbian":
+        dest = 'sr'
+    elif target_language == "Croatian":
+        dest = 'hr'
 
-    elif menu == 2:
-        print("Afrikaans selected.")
-        target_language = 'af'
+    #translates and inserts result into output_entry      
+    result = translator.translate(text=get_text, dest=dest, src=in_lang.lang)
+    output_entry.delete(0, "end")
+    output_entry.insert(0, result.text)
+    return
+ 
+#Target Language Drop Down Menu
+lang_options = ["Spanish", "Afrikaans", "Norwegian", "Serbian", "Croatian"] #all language options
+variable = StringVar(root)
+variable.set(lang_options[0])                                               #default value is spanish
 
-    elif menu == 3:
-        print("Norwegian selected.")
-        target_language = 'no'
-    
-    elif menu == 4:
-        print("Serbian (Cyrillic) selected.")
-        target_language = 'sr'
+target_language = Label(root, text="Select Target Language: ")
+target_language.grid(row=0, column=0)
 
-    elif menu == 5:
-        print("Serbian (Latin) selected.")
-        target_language = 'hr'
+options = OptionMenu(root, variable, *lang_options)
+options.grid(row=0,column=1)
 
-    else:
-        print("Error: no language selected.")
-        continue
-    run = False
+#input label and entry boxes
+input_label = Label(root, text="Input translation text:")
+input_label.grid(row=1, column=0)
 
-content = input("Enter content to be translated: ")                                         #content to be translated
-in_lang = translator.detect(content)                                                        #detect input language
-result = translator.translate(text=content, dest=target_language, src=in_lang.lang)         #translate input to target language
-print(result.text)                                                                          #output results
+input_entry = Entry(fg="black", bg="white", highlightbackground="black", highlightthickness="1")
+input_entry.grid(row=1,column=1)
+
+#result label and entry boxes
+result_label = Label(root, text="Translated text:")
+result_label.grid(row=2, column=0)
+output_entry = Entry(fg="black", bg="white", highlightbackground="black", highlightthickness="1" )
+output_entry.grid(row=2,column=1)
+
+#green translate button
+translate_button = Button(text="Translate", bg="lightgreen", fg="black", command=gtrans)
+translate_button.grid(row=3,column=0)
+
+#quit button
+quit_button = Button(text="Quit", command=root.destroy)
+quit_button.grid(row=4, column=0)
+
+##main loop##
+root.mainloop()
