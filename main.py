@@ -1,5 +1,5 @@
 #Language translator from English to any target using google translate requests
-#Currently supports: Spanish (es), Afrikaans (af), and Norwegian (no)
+#Currently supports: Spanish (es), Afrikaans (af), and Norwegian (no), Serbian (sr)
 #Support can be expanded in future project for practice. 
 from googletrans import Translator
 
@@ -10,7 +10,7 @@ run = True
 #Language Selection
 while run == True:
     print("\n" + "Welcome to my English Language Translator. Select from the following menu:")
-    print("1.Spanish\n2.Afrikaans\n3.Norwegian")
+    print("1.Spanish\n2.Afrikaans\n3.Norwegian\n4.Serbian Cyrillic\n5.Serbian Latinica")
     menu = int(input("Enter target langauge: "))
 
     if menu == 1:
@@ -24,6 +24,14 @@ while run == True:
     elif menu == 3:
         print("Norwegian selected.")
         target_language = 'no'
+    
+    elif menu == 4:
+        print("Serbian (Cyrillic) selected.")
+        target_language = 'sr'
+
+    elif menu == 5:
+        print("Serbian (Latin) selected.")
+        target_language = 'hr'
 
     else:
         print("Error: no language selected.")
