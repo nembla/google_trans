@@ -10,9 +10,15 @@ import googletrans
 #initialize translator and set geometry for window
 translator = Translator()
 root = Tk()
-root.geometry("500x500")
+root.geometry("535x535")
 root.title("Language Translator")
-root.iconbitmap("icontiny.ico") 
+root.iconbitmap("images/icontiny.ico")
+root.resizable(False, False)
+
+#background image
+background_image = PhotoImage(file='images/background.png')
+background_label = Label(root, image=background_image)
+background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 #google translation
 def gtrans():
@@ -49,27 +55,31 @@ lang_upper = [x.capitalize() for x in lang]
 options['values'] = lang_upper
 options.grid(row=0,column=2)
 
+#image for label background
+label_back = PhotoImage(file='images/Label_Back1.png') #background image for result_label
+label_back2 = PhotoImage(file='images/Label_Back2.png') #background image for input_label
+label_back3 = PhotoImage(file='images/Label_Back3.png') #background image for target_language
 
 #target lang label
-target_language = Label(root, text="Select Target Language: ")
-target_language.grid(row=0, column=0, padx="20", pady="25")
+target_language = Label(root, text="Select target language: ", font=("Helvetica", 12, 'bold'), fg='white', image=label_back3, compound='center')
+target_language.grid(row=0, column=0, padx=(15,0), pady=(15,15))
 
 #input label and entry boxes
-input_label = Label(root, text="Input translation text:\n(in any language)", pady="25")
-input_label.grid(row=1, column=0, pady="20")
-
-input_entry = Text(fg="black", bg="white", highlightbackground="black", highlightthickness="1", height="8", width="27") 
-input_entry.grid(row=1,column=2, pady="20")
+input_label = Label(root, text="Input text to be translated\n(in any language)", fg='white', font=("Helvetica", 12, 'bold'), image=label_back2, compound='center')
+input_label.grid(row=1, column=0, padx=(20,0))
+input_entry = Text(fg="black", bg="white", highlightbackground="black", highlightthickness="1", height="8", width="25", font=("Helvetica")) 
+input_entry.grid(row=1,column=2, pady="10")
 
 #result label and entry boxes
-result_label = Label(root, text="Translated text:", pady="25")
-result_label.grid(row=2, column=0, pady="20")
-output_entry = Text(fg="black", bg="white", highlightbackground="black", highlightthickness="1", height="8", width="27") 
-output_entry.grid(row=2,column=2, pady="20")
+result_label = Label(root, text="Translation:", fg='white', font=("Helvetica", 12, 'bold'), image=label_back, compound='center')
+result_label.grid(row=2, column=0, pady=(10,25))
+output_entry = Text(fg="black", bg="SystemButtonFace", highlightbackground="black", highlightthickness="1", height="8", width="25", font=("Helvetica")) 
+output_entry.grid(row=2,column=2, pady=(10,25))
+output_entry.configure(state='disabled')
 
 #green translate button
-translate_button = Button(text="Translate", bg="lightgreen", fg="black", command=gtrans)
-translate_button.grid(row=3,column=1, pady="8", padx="10")
+translate_button = Button(text="Translate", bg="lightgreen", fg="black", command=gtrans, relief=RAISED)
+translate_button.grid(row=3,column=1, pady="8")
 
 #quit button
 quit_button = Button(text="Quit", command=root.destroy)

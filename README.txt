@@ -7,6 +7,5 @@ using tkinter and I think its going well so far.
 
 Future updates:
 RegEx Update for input text
-Responsiveness
-Prettify the app
+move translation to next line to not cut words off
 maybe Input percentage confidence
