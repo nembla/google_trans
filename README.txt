@@ -6,6 +6,4 @@ package, and tkinter for the GUI. This is my first project
 using tkinter and I think its going well so far. 
 
 Future updates:
-RegEx Update
-Adding support for all support google translate languages
-Optimize language selection i.e. "Serbian" to "sr" not using if / elif
+RegEx Update for input text

@@ -4,6 +4,7 @@
 from tkinter import *
 import tkinter.ttk as ttk
 from googletrans import Translator
+import googletrans
 
 
 #initialize translator and set geometry for window
@@ -15,6 +16,9 @@ root.iconbitmap("icontiny.ico")
 
 #google translation
 def gtrans():
+    #chosen language
+    chosen_lang = options.get()
+
     #sets output text state to enabled
     output_entry.configure(state='normal')
 
@@ -22,47 +26,33 @@ def gtrans():
     get_text = input_entry.get("1.0", END)
     in_lang = translator.detect(get_text)    
 
-    #gets the target language and swaps string to google translate keyphrase for lang selection  
-    target_language = variable.get()                    #make 2 lists with same indecies for lang so index 0 = spanish = es on list 2
-    if target_language == "Spanish":       
-        dest = 'es'
-    elif target_language == "Afrikaans":
-        dest = 'af'
-    elif target_language == "Norwegian":
-        dest = 'no'
-    elif target_language == "Serbian":
-        dest = 'sr'
-    elif target_language == "Croatian":
-        dest = 'hr'
-    else:
-        dest = FALSE
+    result = translator.translate(text=get_text, dest=chosen_lang, src=in_lang.lang)
+    output_entry.delete("1.0", END)
+    output_entry.insert("1.0", result.text)
 
-    #translates and inserts result into output_entry      
-    if dest != FALSE:
-        result = translator.translate(text=get_text, dest=dest, src=in_lang.lang)
-        output_entry.delete("1.0", END)
-        output_entry.insert("1.0", result.text)
-
-        #sets output text state to disabled to avoid editing
-        output_entry.configure(state='disabled')
-
-    else:
-        output_entry.delete("1.0", END)
-        output_entry.insert("1.0", "Error: Language not supported")
-        output_entry.configure(state='disabled')
-
-    return
+    output_entry.configure(state='disabled')
  
 #Target Language Drop Down Menu
 variable = StringVar(root)
-options = ttk.Combobox(root, width=27, textvariable=variable)
-options['values'] = ["Spanish", "Afrikaans", "Norwegian", "Serbian", "Croatian"]    #all language options
-variable.set("Spanish")                                                             #default value is spanish
+options = ttk.Combobox(root, width=27, textvariable=variable, state='readonly')
+
+#sets up dictionary of languages into two lists
+dictionary = {}
+dictionary = googletrans.LANGUAGES
+lang_code = [k for item in [dictionary] for k,v in dictionary.items()]
+lang = [v for item in [dictionary] for k,v in dictionary.items()]
+
+#loop to capitalize every item in list lang
+lang_upper = [x.capitalize() for x in lang]
+
+#options dropdown values and gridded
+options['values'] = lang_upper
+options.grid(row=0,column=2)
+
+
+#target lang label
 target_language = Label(root, text="Select Target Language: ")
 target_language.grid(row=0, column=0, padx="20", pady="25")
-
-
-options.grid(row=0,column=2)
 
 #input label and entry boxes
 input_label = Label(root, text="Input translation text:\n(in any language)", pady="25")
