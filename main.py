@@ -67,13 +67,13 @@ target_language.grid(row=0, column=0, padx=(15,0), pady=(15,15))
 #input label and entry boxes
 input_label = Label(root, text="Input text to be translated\n(in any language)", fg='white', font=("Helvetica", 12, 'bold'), image=label_back2, compound='center')
 input_label.grid(row=1, column=0, padx=(20,0))
-input_entry = Text(fg="black", bg="white", highlightbackground="black", highlightthickness="1", height="8", width="25", font=("Helvetica")) 
+input_entry = Text(fg="black", bg="white", highlightbackground="black", highlightthickness="1", height="8", width="25", font=("Helvetica"), wrap=WORD)
 input_entry.grid(row=1,column=2, pady="10")
 
 #result label and entry boxes
 result_label = Label(root, text="Translation:", fg='white', font=("Helvetica", 12, 'bold'), image=label_back, compound='center')
 result_label.grid(row=2, column=0, pady=(10,25))
-output_entry = Text(fg="black", bg="SystemButtonFace", highlightbackground="black", highlightthickness="1", height="8", width="25", font=("Helvetica")) 
+output_entry = Text(fg="black", bg="SystemButtonFace", highlightbackground="black", highlightthickness="1", height="8", width="25", font=("Helvetica"), wrap=WORD)
 output_entry.grid(row=2,column=2, pady=(10,25))
 output_entry.configure(state='disabled')
 
